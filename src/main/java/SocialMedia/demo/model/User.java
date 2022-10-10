@@ -18,20 +18,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
+@Table(name = "s_user")
 
 
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO )
     private Long userId;
-
+    @NotBlank(message = "Username is required")
+    private String username;
 
     @Email
     @NotEmpty(message = "Email is required")
     private String email;
-    @NotBlank(message = "user name is required ")
-    private String nom;
+
     @NotBlank(message = "Password is required")
 
 

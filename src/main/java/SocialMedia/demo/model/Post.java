@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.security.Timestamp;
 import java.time.Instant;
 
 import static javax.persistence.FetchType.LAZY;
@@ -14,10 +13,10 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Data
 @Builder
-@Table(name = "STATUS")
+@Table(name = "post")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Status {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long post_id;
@@ -28,7 +27,7 @@ public class Status {
     private Integer voteCount=0 ;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId",referencedColumnName = "userId")
-   private User user ;
+    private User user ;
     private Instant createdDate;
 
 

@@ -1,11 +1,10 @@
 package SocialMedia.demo.Repo;
 
-import SocialMedia.demo.model.Status;
+import SocialMedia.demo.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 @Repository
-public interface StatusRepo extends JpaRepository<Status,Long> {
+public interface PostRepo extends JpaRepository<Post,Long> {
 
 }
