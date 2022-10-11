@@ -25,7 +25,7 @@ public class Comment {
     private String text ;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "post_id",referencedColumnName = "post_id")
-    private Post status;
+    private Post post;
     private Instant createdDate;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name="userId",referencedColumnName = "userId")

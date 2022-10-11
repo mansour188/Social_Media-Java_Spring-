@@ -18,11 +18,15 @@ public class UserService {
     public User SaveUser(User user){
         return userRepo.save(user);
     }
+
+    public void delateUser(Long id ){
+        userRepo.deleteById(id);
+    }
     @SneakyThrows
-    public User findUserByuserName(String username){
+    public User findUserByUsername(String username){
         return userRepo
                 .findByUsername(username)
-                .orElseThrow(()->  new IllegalAccessException("User Not found "));
+                .orElseThrow(()->  new IllegalArgumentException("User Not found "));
     }
 
     public List<User>  allUser(){
@@ -37,7 +41,7 @@ public class UserService {
     public User findUserByid(Long id){
         return userRepo
                 .findById(id)
-                .orElseThrow(()->  new IllegalAccessException("User Not found ")) ;
+                .orElseThrow(()->  new IllegalArgumentException("User Not found ")) ;
     }
 
 
