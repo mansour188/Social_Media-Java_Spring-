@@ -1,6 +1,7 @@
 package SocialMedia.demo.service;
 
 import SocialMedia.demo.Repo.PostRepo;
+import SocialMedia.demo.model.Comment;
 import SocialMedia.demo.model.Post;
 import SocialMedia.demo.model.User;
 import lombok.NoArgsConstructor;
@@ -32,8 +33,11 @@ public class PostService {
    public void deletePostById(Long post_id ){
         postRepo.deleteById(post_id);
    }
-   public Post UpdatePostByusername(String username ,   Long post_id){
-       return null;
-
+   public List<Post> getPostByusername(String username){
+        return postRepo.findByUserUsername(username);
    }
+
+
+
+
 }

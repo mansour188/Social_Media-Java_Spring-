@@ -26,6 +26,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO )
     private Long userId;
     @NotBlank(message = "Username is required")
+    @Column(unique = true)
     private String username;
 
     @Email
@@ -38,7 +39,8 @@ public class User {
     private String password;
     private UseerRole userRole;
     String ImageUrl;
-
+    @OneToMany(mappedBy = "user")
+    List<Post> posts=new ArrayList<>();
 
 
 

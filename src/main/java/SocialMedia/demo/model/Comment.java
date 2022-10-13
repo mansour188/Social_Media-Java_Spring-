@@ -20,11 +20,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Comment {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long id ;
+    private Long comtId ;
     @NotEmpty
     private String text ;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "post_id",referencedColumnName = "post_id")
+    @JoinColumn(name = "postId",referencedColumnName = "postId")
     private Post post;
     private Instant createdDate;
     @ManyToOne(fetch = LAZY)
