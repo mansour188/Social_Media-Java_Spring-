@@ -21,8 +21,8 @@ public class CommentService {
     @Autowired
     PostService postService ;
 
-    public Comment SaveComment(String username ,Long post_id,Comment comment){
-        User user=userService.findUserByUsername(username);
+    public Comment SaveComment(String email ,Long post_id,Comment comment){
+        User user=userService.findUserByEmail(email);
         Post post=postService.findPostById(post_id);
         comment.setUser(user);
         comment.setPost(post);
@@ -38,8 +38,8 @@ public class CommentService {
     }
 
 
-    public List<Comment>  getCommentByUsername(String username){
-        return commentRepo.findByUserUsername(username) ;
+    public List<Comment>  getCommentByUsername(String email){
+        return commentRepo.findByUserEmail(email) ;
 
     }
     public void deleteCommentById(Long comtId){

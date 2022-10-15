@@ -21,8 +21,8 @@ public class PostService {
     public List<Post> getAllPost(){
         return postRepo.findAll();
     }
-   public Post savePost(String username ,Post post){
-        User user=userService.findUserByUsername(username);
+   public Post savePost(String email ,Post post){
+        User user=userService.findUserByEmail(email);
         post.setUser(user);
         return postRepo.save(post);
 
@@ -34,7 +34,7 @@ public class PostService {
         postRepo.deleteById(post_id);
    }
    public List<Post> getPostByusername(String username){
-        return postRepo.findByUserUsername(username);
+        return postRepo.findByUserEmail(username);
    }
 
 
