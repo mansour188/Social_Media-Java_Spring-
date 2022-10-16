@@ -11,23 +11,28 @@ import java.util.List;
 
 @NoArgsConstructor
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/apiu")
 public class UserCtrl {
     @Autowired
     UserService userService;
-    @Autowired
-    RegistrationService regestrationService;
-    @PostMapping("/registration")
-    public String saveUser(@RequestBody RegestrationUser request){
-        return regestrationService.registre(request);
 
-    }
-    @GetMapping("/get")
+    @GetMapping("/getUsers")
     public List<User> getUsers(){
         return userService.allUser();
     }
-    @GetMapping("/get/{id}")
+    @GetMapping("/getUser/{id}")
     public User findUserById(@RequestBody @PathVariable Long id ){
         return userService.findUserByid(id);
     }
+
+    @GetMapping("/getUser/{name}")
+    public List<User> getUserByname(@RequestBody @PathVariable String name) {
+        return userService.findUserByUsername(name);
+
+    }
+    @GetMapping("/getUser/{email}")
+    public  User getUserByEmail(@RequestBody @PathVariable String email){
+        return userService.findUserByEmail(email);
+    }
 }
+

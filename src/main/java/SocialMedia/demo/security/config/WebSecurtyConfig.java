@@ -22,7 +22,7 @@ public  final BCryptPasswordEncoder bCryptPasswordEncoder;
     protected void configure(HttpSecurity http) throws Exception {
        http.csrf().disable()
                .authorizeRequests()
-               .antMatchers("/api/registration/**","/api/get/**")
+               .antMatchers("/apir/registration/**","/api/get/**")
                .permitAll()
 
                .anyRequest()

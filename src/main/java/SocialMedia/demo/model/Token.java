@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -28,7 +27,7 @@ public class Token {
     @Column(nullable = false)
 
     private LocalDateTime expireDate;
-    private  LocalDateTime  conformedDate;
+    private  LocalDateTime confirmedAt;
 
     @ManyToOne
     @JoinColumn( nullable = false,

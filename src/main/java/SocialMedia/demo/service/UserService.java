@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -64,6 +66,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepo.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("user Not found "));
     }
+    @Transactional
     public String signUpUser(User user){
       Boolean userExist= userRepo.findByEmail(user.getEmail()).isPresent();
        if (userExist){
@@ -86,6 +89,9 @@ public class UserService implements UserDetailsService {
 
 
         return  token;
+    }
+    public int enableUser(String email) {
+        return userRepo.enableUser(email);
     }
 
 
