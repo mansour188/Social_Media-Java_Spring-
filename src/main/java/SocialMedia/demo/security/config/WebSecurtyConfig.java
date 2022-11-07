@@ -1,6 +1,6 @@
 package SocialMedia.demo.security.config;
 
-import SocialMedia.demo.service.UserService;
+import SocialMedia.demo.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,18 +16,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSecurtyConfig extends WebSecurityConfigurerAdapter {
 
-private final UserService userService ;
+private final UserServiceImpl userService ;
 public  final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
        http.csrf().disable()
                .authorizeRequests()
-               .antMatchers("/apir/registration/**","/api/get/**")
-               .permitAll()
+               .antMatchers("/login*")
+               .permitAll();
 
-               .anyRequest()
-               .authenticated().and()
-               .formLogin();
+
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

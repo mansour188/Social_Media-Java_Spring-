@@ -1,8 +1,8 @@
-package SocialMedia.demo.cntr;
+package SocialMedia.demo.controllers;
 
 import SocialMedia.demo.model.User;
-import SocialMedia.demo.service.RegistrationService;
 import SocialMedia.demo.service.UserService;
+import SocialMedia.demo.service.impl.UserServiceImpl;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +11,8 @@ import java.util.List;
 
 @NoArgsConstructor
 @RestController
-@RequestMapping(path = "/apiu")
-public class UserCtrl {
+@RequestMapping(path = "/api")
+public class UserCntrollers {
     @Autowired
     UserService userService;
 
@@ -33,6 +33,11 @@ public class UserCtrl {
     @GetMapping("/getUser/{email}")
     public  User getUserByEmail(@RequestBody @PathVariable String email){
         return userService.findUserByEmail(email);
+    }
+
+    @GetMapping(path = "/friends")
+    public List<User> getUserFriends(){
+        return null;
     }
 }
 

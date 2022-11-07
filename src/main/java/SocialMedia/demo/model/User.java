@@ -41,6 +41,10 @@ public class User implements UserDetails {
     private Boolean locked=false;
     private Boolean enabled=false ;
     private String ImageUrl;
+    @ManyToOne
+    private User owner;
+    @OneToMany(mappedBy="owner")
+    private List<User> friends=new ArrayList<>();
 
     public User(String username, String email, String password, UseerRole userRole) {
         this.name = username;

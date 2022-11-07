@@ -1,4 +1,4 @@
-package SocialMedia.demo.cntr;
+package SocialMedia.demo.controllers;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

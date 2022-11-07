@@ -1,21 +1,24 @@
-package SocialMedia.demo.cntr;
+package SocialMedia.demo.controllers;
 
 import SocialMedia.demo.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/apir")
-public class RegstrationCntr {
+@RequestMapping(path = "/api")
+public class RegstrationCntrollers {
     @Autowired
     RegistrationService registrationService;
     @PostMapping("/registration")
     public String saveUser(@RequestBody RegestrationUser request){
+      
         return registrationService.registre(request);
 
     }
-    @GetMapping(path = "confirm")
+    @GetMapping(path = "/registration/confirm")
+    @ResponseBody
     public String confirm(@RequestParam("token") String token) {
+        System.out.println(token);
         return registrationService.confirmToken(token);
     }
 

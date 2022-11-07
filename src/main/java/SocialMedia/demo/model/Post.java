@@ -16,6 +16,7 @@ import static javax.persistence.FetchType.LAZY;
 @Table(name = "post")
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
