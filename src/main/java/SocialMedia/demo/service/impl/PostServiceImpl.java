@@ -33,8 +33,11 @@ public class PostServiceImpl implements PostService {
    public void deletePostById(Long post_id ){
         postRepo.deleteById(post_id);
    }
-   public List<Post> getPostByusername(String username){
-        return postRepo.findByUserEmail(username);
+   public List<Post> getPostByEmail(String email) {
+       User user= userService.findUserByEmail(email);
+       List <Post> posts=user.getPosts();
+
+       return posts;
    }
 
    public void updatePost(Post post){

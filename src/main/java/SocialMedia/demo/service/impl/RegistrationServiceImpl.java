@@ -1,6 +1,6 @@
 package SocialMedia.demo.service.impl;
 
-import SocialMedia.demo.controllers.RegestrationUser;
+import SocialMedia.demo.dto.RegestrationRequest;
 import SocialMedia.demo.email.EmailNotification;
 import SocialMedia.demo.email.EmailSender;
 import SocialMedia.demo.model.Token;
@@ -28,7 +28,7 @@ public class RegistrationServiceImpl  implements RegistrationService {
     final private ConformationTokenServiceImpl conformationTokenService;
 
 
-    public String registre(RegestrationUser request) {
+    public String registre(RegestrationRequest request) {
 
         boolean isvalidEmail=emailValidator.test(request.getEmail());
 

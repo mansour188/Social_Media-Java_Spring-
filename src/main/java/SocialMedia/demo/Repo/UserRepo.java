@@ -20,8 +20,10 @@ public interface UserRepo extends JpaRepository<User,Long> {
     @Query("UPDATE User a " +
             "SET a.enabled = TRUE WHERE a.email = ?1")
     int enableUser(String email);
+    @Query("SELECT u FROM User u WHERE u.name LIKE ?1%")
+    List<User> findUserStartWith(String ch);
 
-    List<User> findByUserEmail(String email);
+
 
 }
 

@@ -35,7 +35,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     public List<Comment> findCommentByPostId(Long postId){
-        return commentRepo.findByPostPostId(postId);
+        Post post=postService.findPostById(postId);
+        List<Comment> comments=post.getCommentList();
+        return comments  ;
 
     }
 

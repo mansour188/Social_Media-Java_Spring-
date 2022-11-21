@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepo.save(user);
     }
 
-    public void delateUser(Long id ){
+    public void deleteUser(Long id ){
         userRepo.deleteById(id);
     }
     @SneakyThrows
@@ -54,6 +54,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepo
                 .findByEmail(email).orElseThrow(()->new IllegalArgumentException("user with email "+email+"not exist"));
     }
+    public  List<User>  findUserStartingWith(String ch){
+        return userRepo.findUserStartWith(ch);
+
+    }
     public User findUserByid(Long id) throws IllegalArgumentException{
         return userRepo
                 .findById(id)
@@ -63,7 +67,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepo.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("user Not found "));
+        User user= userRepo.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("user Not found "));
+        return user;
+
     }
     @Transactional
     public String signUpUser(User user){

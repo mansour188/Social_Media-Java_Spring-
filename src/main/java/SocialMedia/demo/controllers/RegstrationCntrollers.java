@@ -1,5 +1,6 @@
 package SocialMedia.demo.controllers;
 
+import SocialMedia.demo.dto.RegestrationRequest;
 import SocialMedia.demo.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,7 @@ public class RegstrationCntrollers {
     @Autowired
     RegistrationService registrationService;
     @PostMapping("/registration")
-    public String saveUser(@RequestBody RegestrationUser request){
+    public String saveUser(@RequestBody RegestrationRequest request){
       
         return registrationService.registre(request);
 

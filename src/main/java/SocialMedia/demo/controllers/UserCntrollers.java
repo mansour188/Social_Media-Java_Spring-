@@ -20,6 +20,12 @@ public class UserCntrollers {
     public List<User> getUsers(){
         return userService.allUser();
     }
+    @GetMapping("/search/")
+    @ResponseBody
+    public  List<User> searchUserByname(@RequestParam(value = "ch", required = false) String ch){
+        return userService.findUserStartingWith(ch);
+
+    }
     @GetMapping("/getUser/{id}")
     public User findUserById(@RequestBody @PathVariable Long id ){
         return userService.findUserByid(id);
