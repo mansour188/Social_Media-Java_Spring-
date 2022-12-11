@@ -1,76 +1,75 @@
 package SocialMedia.demo.service.impl;
 
 import SocialMedia.demo.Repo.CommentRepo;
+import SocialMedia.demo.Repo.PostRepo;
+import SocialMedia.demo.Repo.UserRepo;
+import SocialMedia.demo.dto.CommentRequest;
+import SocialMedia.demo.exception.PostNotFoundException;
 import SocialMedia.demo.model.Comment;
 import SocialMedia.demo.model.Post;
 import SocialMedia.demo.model.User;
 import SocialMedia.demo.service.CommentService;
 import SocialMedia.demo.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @NoArgsConstructor
+@AllArgsConstructor
 public class CommentServiceImpl implements CommentService {
     @Autowired
     CommentRepo commentRepo ;
     @Autowired
     UserService userService;
     @Autowired
-    PostServiceImpl postService ;
+    PostRepo postRepo;
+    @Autowired
+    UserRepo userRepo;
 
-    public Comment SaveComment(String email ,Long post_id,Comment comment){
-        User user=userService.findUserByEmail(email);
-        Post post=postService.findPostById(post_id);
-        comment.setUser(user);
+
+    @Override
+    public void save(CommentRequest commentRequest) {
+        Post post=postRepo.findById(commentRequest.getPostId())
+                .orElseThrow(()-> new PostNotFoundException("post id="+commentRequest.getPostId()+"not found"));
+        Comment comment=new Comment();
+        User user=userService.getCurrentUser();
+        System.out.println(user.toString());
         comment.setPost(post);
-        return commentRepo.save(comment);
-    }
-    public Comment getCommentById(Long id ){
-        return commentRepo.findById(id).orElseThrow(()->new IllegalArgumentException("comment not found "));
-    }
+        comment.setUser(user);
+        comment.setText(commentRequest.getText());
+        comment.setCreatedDate(Instant.now());
+        commentRepo.save(comment);
 
-    public List<Comment> findCommentByPostId(Long postId){
-        Post post=postService.findPostById(postId);
-        List<Comment> comments=post.getCommentList();
-        return comments  ;
-
-    }
-
-
-    public List<Comment>  getCommentByUsername(String email){
-        return commentRepo.findByUserEmail(email) ;
-
-    }
-    public void deleteCommentById(Long comtId){
-       Optional<Comment> comment=commentRepo.findById(comtId);
-       if (comment.isPresent()){
-           commentRepo.delete(comment.get());
-
-       }else {
-           throw new RuntimeException("commment Not exist");
-       }
-    }
-
-
-
-    
-    // update comment by user and post
-    public void updateComment(Comment comment){
-        long id=comment.getComtId();
-        Comment oldComment=commentRepo.findById(id).orElseThrow(()->new IllegalArgumentException("not exist"));
-        oldComment.builder()
-                .text(comment.getText())
-                .build();
-        commentRepo.save(oldComment);
 
 
     }
 
+    @Override
+    public List<Comment> getAllCommentForPost(Long postId) {
+
+        System.out.println("************************************");
+        Post post=postRepo.findById(postId).orElseThrow(()->new RuntimeException("post not exist"));
+        System.out.println(post.getPostId());
+        List<Comment> comments=commentRepo.findByPost(post);
+        System.out.println(comments);
+
+        System.out.println("************************************************************************");
 
 
+
+        return comments;
+    }
+
+    @Override
+    public List<Comment> getAllCommentForUser(String username) {
+        User user=userRepo.findByEmail(username)
+                .orElseThrow(()->new RuntimeException("user username:"+username+" not exist"));
+        return commentRepo.findAllByUser(user);
+
+    }
 }

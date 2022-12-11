@@ -3,12 +3,17 @@ package SocialMedia.demo.service.impl;
 import SocialMedia.demo.Repo.TokenRepo;
 import SocialMedia.demo.Repo.UserRepo;
 import SocialMedia.demo.model.Token;
+import SocialMedia.demo.model.UseerRole;
 import SocialMedia.demo.model.User;
 import SocialMedia.demo.service.UserService;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ExpressionException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -75,12 +80,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public String signUpUser(User user){
       Boolean userExist= userRepo.findByEmail(user.getEmail()).isPresent();
        if (userExist){
-           throw new IllegalStateException("email deja exist");
+           throw new IllegalStateException("email déjà exist");
        }
 
       String encodePassword= bCryptPasswordEncoder.encode(user.getPassword());
 
        user.setPassword(encodePassword);
+       user.setUserRole(UseerRole.USER);
+       user.setEnabled(false);
 
 
         userRepo.save(user);
@@ -99,11 +106,21 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepo.enableUser(email);
     }
 
-    public List<User> getUserFriends(){
-        return null;
 
+    @Transactional(readOnly = true)
+    public User getCurrentUser() {
+        UserDetails principal = (UserDetails) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return userRepo.findByEmail(principal.getUsername()).orElseThrow(()-> new ExpressionException("not found"));
     }
 
+    @Override
+    public List<User> getfriendofcurrentUser() {
+        User user=getCurrentUser();
+        List<User> friends=user.getFriends();
+
+        return friends;
+    }
 
 
 }

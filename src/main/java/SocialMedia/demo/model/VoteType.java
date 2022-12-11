@@ -1,2 +1,10 @@
-package SocialMedia.demo.model;public class VoteType {
+package SocialMedia.demo.model;
+
+public enum VoteType {
+    UPVOTE(1),DOWNVOTE(-1);
+    VoteType(int direction){
+
+
+
+    }
 }

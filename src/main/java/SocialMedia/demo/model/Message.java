@@ -1,7 +1,6 @@
 package SocialMedia.demo.model;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 
 public abstract class Message  {

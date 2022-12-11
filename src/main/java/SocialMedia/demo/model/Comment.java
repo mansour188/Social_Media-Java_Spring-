@@ -1,5 +1,6 @@
 package SocialMedia.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 @Entity
 
+
 public class Comment {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -30,4 +32,15 @@ public class Comment {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name="userId",referencedColumnName = "userId")
     private User user;
+
+    @JsonBackReference
+    public Post getPost() {
+        return post;
+    }
+
+
+    @JsonBackReference
+    public User getUser() {
+        return user;
+    }
 }

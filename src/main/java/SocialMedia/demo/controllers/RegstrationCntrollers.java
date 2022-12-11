@@ -3,24 +3,28 @@ package SocialMedia.demo.controllers;
 import SocialMedia.demo.dto.RegestrationRequest;
 import SocialMedia.demo.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api")
+@CrossOrigin("*")
 public class RegstrationCntrollers {
     @Autowired
     RegistrationService registrationService;
     @PostMapping("/registration")
-    public String saveUser(@RequestBody RegestrationRequest request){
-      
-        return registrationService.registre(request);
+    public ResponseEntity<String> saveUser(@RequestBody RegestrationRequest request){
+        registrationService.registre(request);
+        return new ResponseEntity<>("user registration secsesful", HttpStatus.OK);
 
     }
     @GetMapping(path = "/registration/confirm")
     @ResponseBody
-    public String confirm(@RequestParam("token") String token) {
+    public ResponseEntity confirm(@RequestParam("token") String token) {
         System.out.println(token);
-        return registrationService.confirmToken(token);
+        registrationService.confirmToken(token);
+        return new ResponseEntity<>("Account Activated ",HttpStatus.OK);
     }
 
 

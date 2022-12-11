@@ -1,8 +1,13 @@
-package SocialMedia.demo.dto;
+package SocialMedia.demo.service.impl;
 
+import SocialMedia.demo.Repo.RefreshTokenRepository;
+import SocialMedia.demo.model.RefreshToken;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -15,12 +20,14 @@ public class RefreshTokenService {
         refreshToken.setToken(UUID.randomUUID().toString());
         refreshToken.setCreatedDate(Instant.now());
 
-        return refreshTokenRepository.save(refreshToken);
+        return   refreshTokenRepository.save(refreshToken);
+
     }
+
 
     void validateRefreshToken(String token) {
         refreshTokenRepository.findByToken(token)
-                .orElseThrow(() -> new SpringRedditException("Invalid refresh Token"));
+                .orElseThrow(() -> new RuntimeException("Invalid refresh Token"));
     }
 
     public void deleteRefreshToken(String token) {

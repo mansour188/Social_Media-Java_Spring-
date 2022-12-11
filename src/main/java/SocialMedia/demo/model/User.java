@@ -1,5 +1,6 @@
 package SocialMedia.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -88,5 +89,14 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+  @JsonBackReference
+    public List<Post> getPosts() {
+        return posts;
+    }
+    @JsonBackReference
+
+    public List<User> getFriends() {
+        return friends;
     }
 }

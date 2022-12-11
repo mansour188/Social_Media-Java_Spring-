@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 
 public interface UserService {
@@ -20,4 +21,7 @@ public interface UserService {
     User findUserByid(Long id);
     public UserDetails loadUserByUsername(String email);
     public List<User> findUserStartingWith(String ch);
+    public User getCurrentUser();
+
+    List<User> getfriendofcurrentUser();
 }

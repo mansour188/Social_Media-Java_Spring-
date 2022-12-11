@@ -17,7 +17,7 @@ public class TokenUtil {
     private final String claims_creted="creted";
 
     @org.springframework.beans.factory.annotation.Value("${auth.expiration}")
-    private final Long token_validaty=604800L;
+    private final Long token_validaty=90000L;
     @Value("${auth.secret}")
     private String token_secret;
 
@@ -38,6 +38,17 @@ public class TokenUtil {
 
         }
 
+    public String generateTokenWithUserName(String username) {
+        Map<String,Object> claims=new HashMap<>();
+        claims.put(claims_sub,username);
+        claims.put(claims_creted,new Date());
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(username)
+                .setExpiration(generateExpiration())
+                .signWith(SignatureAlgorithm.HS256,token_secret)
+                .compact();
+                        }
     private Date generateExpiration() {
         return new Date(System.currentTimeMillis()+token_validaty*1000);
 
@@ -77,5 +88,9 @@ public class TokenUtil {
             claims=null;
         }
         return claims;
+    }
+
+    public long getJwtExpirationInMillis() {
+        return token_validaty;
     }
 }

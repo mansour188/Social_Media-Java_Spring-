@@ -1,6 +1,8 @@
 package SocialMedia.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -24,7 +26,8 @@ public class Post {
     private String title ;
 
     private String contenu ;
-    private String Url;
+    @Nullable
+    private String url;
     private Integer voteCount=0 ;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId",referencedColumnName = "userId")
@@ -34,8 +37,13 @@ public class Post {
     private List<Comment> commentList=new ArrayList<>();
 
 
+    @JsonBackReference
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
 
-
-
-
+    @JsonBackReference
+    public User getUser() {
+        return user;
+    }
 }
